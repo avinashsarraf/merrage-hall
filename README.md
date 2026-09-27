@@ -69,27 +69,37 @@ npm run db:seed     # seed demo data (skips if already seeded; FORCE_SEED=1 to w
 
 ## Use Supabase as the backend (production)
 
-1. Create a project at [supabase.com](https://supabase.com) (free tier works).
-2. Copy the connection string from **Project Settings → Database → Connection string → URI**
-   (the *transaction pooler* string on port `6543` is recommended for serverless).
-3. Create a `.env` file:
+See **[SUPABASE.md](SUPABASE.md)** for the full guide. Short version:
 
-   ```bash
-   DATABASE_URL="postgresql://postgres.<project-ref>:<password>@aws-0-<region>.pooler.supabase.com:6543/postgres"
-   ```
+```bash
+export DATABASE_URL="postgresql://postgres.<ref>:<pw>@aws-0-<region>.pooler.supabase.com:6543/postgres"
+npm run db:push && npm run db:seed
+```
 
-4. Push the schema & seed:
+## Deploy with Docker (Coolify, self-hosted, any PaaS)
 
-   ```bash
-   npm run db:push
-   npm run db:seed
-   ```
+The repo ships a multi-stage `Dockerfile` that builds the Next.js
+**standalone** server into a ~150 MB Alpine image. The container is stateless —
+it needs only a reachable PostgreSQL (Supabase recommended):
 
-5. `npm run build && npm start` (or deploy to Vercel with the same env var).
+```bash
+docker build -t merragehall .
+docker run -p 3000:3000 -e DATABASE_URL="postgresql://…" merragehall
+```
 
-The `postgres` driver is configured with `prepare: false`, which is required for Supabase's
-pgBouncer pooler. `supabase/config.toml` is included if you prefer the Supabase CLI workflow
-(`supabase link` then apply migrations from `drizzle-kit generate`).
+**Coolify:** import the repo, set the environment variable `DATABASE_URL`, hit
+deploy. Two Coolify-specific notes:
+
+- The build needs no database (all pages render dynamically).
+- If Coolify serves the app over **plain HTTP** (e.g. on `localhost`), also set
+  `ALLOW_INSECURE_COOKIES=true` — otherwise the browser drops the login cookie
+  (it is marked `Secure` in production by default).
+
+| Variable | Required | Default | Purpose |
+|---|---|---|---|
+| `DATABASE_URL` | **yes** | — | Postgres/Supabase connection string (pooler recommended) |
+| `NEXT_PUBLIC_ROOT_DOMAIN` | no | `merragehall.app` | Venue-subdomain root domain (build arg + runtime) |
+| `ALLOW_INSECURE_COOKIES` | no | `false` | `true` only for plain-HTTP deployments |
 
 Optional env vars:
 

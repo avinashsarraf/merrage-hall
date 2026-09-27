@@ -29,7 +29,9 @@ export async function createSession(userId: string) {
     sameSite: "lax",
     path: "/",
     expires: expiresAt,
-    secure: process.env.NODE_ENV === "production",
+    // Secure cookies require HTTPS. Self-hosted/plain-HTTP deployments
+    // (e.g. Coolify on localhost) must set ALLOW_INSECURE_COOKIES=true.
+    secure: process.env.NODE_ENV === "production" && process.env.ALLOW_INSECURE_COOKIES !== "true",
   });
 }
 
