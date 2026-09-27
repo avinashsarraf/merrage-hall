@@ -11,9 +11,9 @@ export function LogoMark({ className }: { className?: string }) {
       aria-hidden
     >
       <svg viewBox="0 0 24 24" fill="none" className="h-[62%] w-[62%]">
-        <circle cx="9.4" cy="14.6" r="4.3" stroke="#f7cfdd" strokeWidth="1.9" />
-        <circle cx="14.6" cy="14.6" r="4.3" stroke="#e4c75b" strokeWidth="1.9" />
-        <path d="M12 4.6l1.05 2.1 2.1.3-1.53 1.47.37 2.08L12 9.44l-1.99 1.11.37-2.08L8.85 7l2.1-.3z" fill="#e4c75b" />
+        <circle cx="9.4" cy="14.6" r="4.3" stroke="#bfdbfe" strokeWidth="1.9" />
+        <circle cx="14.6" cy="14.6" r="4.3" stroke="#dfc25c" strokeWidth="1.9" />
+        <path d="M12 4.6l1.05 2.1 2.1.3-1.53 1.47.37 2.08L12 9.44l-1.99 1.11.37-2.08L8.85 7l2.1-.3z" fill="#dfc25c" />
       </svg>
     </span>
   );

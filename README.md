@@ -38,14 +38,14 @@ Other venue owners (`meera@emeraldlawns.in`, `anil@shagunpalace.in`, `lakshmi@ka
   custom domain connect + DNS verify on Growth/Premium plans
 - **Auth** — email/password with bcrypt hashing, DB-backed sessions (httpOnly cookies), role-based
   dashboards & guards (middleware + server-side checks)
-- **Polished UI** — light theme (maroon + gold + ivory), empty states, loading skeletons, optimistic
+- **Polished UI** — light theme (royal blue + champagne gold + soft white), empty states, loading skeletons, optimistic
   updates, toasts, responsive layout with mobile drawer navigation
 
 ## Tech stack
 
 - **Next.js 15** (App Router, Server Components, Server Actions) + **React 19** + TypeScript
 - **Drizzle ORM** + **PostgreSQL** — the schema, seed and queries are written for **Supabase Postgres**
-- **Tailwind CSS v4** with a custom maroon/gold design system
+- **Tailwind CSS v4** with a custom royal-blue/champagne design system
 - **bcryptjs**, custom session auth, lucide-react icons, fontsource fonts (self-hosted)
 
 ## Run locally (zero-config preview)

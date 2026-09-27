@@ -83,7 +83,7 @@ export function DonutChart({
     <div className={cn("flex flex-wrap items-center justify-center gap-6", className)}>
       <div className="relative h-36 w-36 shrink-0">
         <svg viewBox="0 0 140 140" className="h-full w-full -rotate-90">
-          <circle cx="70" cy="70" r={R} fill="none" stroke="#f4eee3" strokeWidth="17" />
+          <circle cx="70" cy="70" r={R} fill="none" stroke="#eef2f8" strokeWidth="17" />
           {total > 0 &&
             segments
               .filter((s) => s.value > 0)

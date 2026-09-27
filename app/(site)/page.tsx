@@ -101,7 +101,7 @@ export default async function LandingPage() {
               <span className="relative whitespace-nowrap text-brand-700">
                 perfect venue
                 <svg className="absolute -bottom-1.5 left-0 w-full" viewBox="0 0 200 9" fill="none" preserveAspectRatio="none">
-                  <path d="M2 7C50 2 150 2 198 6" stroke="#e4c75b" strokeWidth="3.5" strokeLinecap="round" />
+                  <path d="M2 7C50 2 150 2 198 6" stroke="#dfc25c" strokeWidth="3.5" strokeLinecap="round" />
                 </svg>
               </span>
             </h1>
