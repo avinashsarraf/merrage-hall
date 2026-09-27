@@ -33,7 +33,22 @@ everywhere.
 
 ## 3 · Create the schema + seed demo data
 
-From a checkout of this repo (needs Node 20+):
+### Option A — SQL Editor, no Node required (easiest)
+
+A single self-contained file with the schema **and** all demo data:
+
+1. Open **supabase/master-setup.sql** from this repo (86 KB).
+2. In the Supabase dashboard: **SQL Editor → New query**.
+3. Paste the entire file → **Run**.
+
+Done — tables, enums, indexes, 6 venues, 16 users, 30 bookings, payments and
+subscriptions are created. The file is safe to re-run (existing objects are
+skipped, data is re-seeded).
+
+> Regenerate the file any time after changing the schema or seed:
+> `npx drizzle-kit generate && node scripts/export-sql.mjs`
+
+### Option B — from a checkout with Node 20+
 
 ```bash
 npm install
