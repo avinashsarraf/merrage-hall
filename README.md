@@ -87,13 +87,18 @@ docker build -t merragehall .
 docker run -p 3000:3000 -e DATABASE_URL="postgresql://…" merragehall
 ```
 
-**Coolify:** import the repo, set the environment variable `DATABASE_URL`, hit
-deploy. Two Coolify-specific notes:
+**Coolify:** set one environment variable and deploy:
 
-- The build needs no database (all pages render dynamically).
-- If Coolify serves the app over **plain HTTP** (e.g. on `localhost`), also set
-  `ALLOW_INSECURE_COOKIES=true` — otherwise the browser drops the login cookie
-  (it is marked `Secure` in production by default).
+| Variable | Value |
+|---|---|
+| `DATABASE_URL` | Your Supabase pooler URI (port `6543`) — the only credential the app needs |
+
+That's it — **the container creates the schema and seeds the demo data automatically on its first boot** (it detects an empty database and runs `supabase/master-setup.sql`). Opt out with `SKIP_DB_SETUP=1`. Notes:
+
+- The bootstrap also reads a `.env` file mounted next to `server.js`, if you prefer that over environment variables (real env vars always win).
+- `NEXT_PUBLIC_SUPABASE_URL` / `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY` are **not needed** — they're for the Supabase SDK, and this app talks to Postgres directly.
+- If Coolify serves the app over **plain HTTP** (e.g. on `localhost`), also set `ALLOW_INSECURE_COOKIES=true` — otherwise the browser drops the login cookie (it is marked `Secure` in production by default).
+- Connection problems print a human-readable diagnosis in the container logs, and `/api/health` shows the DB status from the browser.
 
 **Full stack locally with Docker** (app + PostgreSQL, no Supabase needed):
 

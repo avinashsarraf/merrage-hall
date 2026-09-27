@@ -47,6 +47,12 @@ RUN addgroup -S nodejs && adduser -S nextjs -G nodejs
 COPY --from=builder --chown=nextjs:nodejs /app/public ./public
 COPY --from=builder --chown=nextjs:nodejs /app/.next/standalone ./
 COPY --from=builder --chown=nextjs:nodejs /app/.next/static ./.next/static
+# bootstrap: loads .env, auto-creates schema + demo data on an empty database,
+# prints human-readable diagnostics, then starts the server
+COPY --from=builder --chown=nextjs:nodejs /app/scripts/bootstrap.mjs ./bootstrap.mjs
+COPY --from=builder --chown=nextjs:nodejs /app/supabase/master-setup.sql ./master-setup.sql
+# postgres driver for the bootstrap script (the app itself bundles it)
+COPY --from=deps --chown=nextjs:nodejs /app/node_modules/postgres ./node_modules/postgres
 
 USER nextjs
 EXPOSE 3000
@@ -55,4 +61,4 @@ EXPOSE 3000
 HEALTHCHECK --interval=30s --timeout=5s --start-period=20s --retries=3 \
   CMD node -e "fetch('http://127.0.0.1:'+ (process.env.PORT||3000) +'/login').then(r=>process.exit(r.ok?0:1)).catch(()=>process.exit(1))"
 
-CMD ["node", "server.js"]
+CMD ["node", "bootstrap.mjs"]

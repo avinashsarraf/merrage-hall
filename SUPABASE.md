@@ -33,7 +33,13 @@ everywhere.
 
 ## 3 · Create the schema + seed demo data
 
-### Option A — SQL Editor, no Node required (easiest)
+### Option A — do nothing (recommended)
+
+Just deploy with `DATABASE_URL` set. The container's bootstrap detects the
+empty database and runs the setup automatically on first boot
+(schema + demo data). Opt out with `SKIP_DB_SETUP=1`.
+
+### Option B — SQL Editor, no Node required
 
 A single self-contained file with the schema **and** all demo data:
 
@@ -48,7 +54,7 @@ skipped, data is re-seeded).
 > Regenerate the file any time after changing the schema or seed:
 > `npx drizzle-kit generate && node scripts/export-sql.mjs`
 
-### Option B — from a checkout with Node 20+
+### Option C — from a checkout with Node 20+
 
 ```bash
 npm install

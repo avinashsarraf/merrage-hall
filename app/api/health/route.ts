@@ -46,10 +46,23 @@ export async function GET() {
     const message = String(err.message ?? err)
       .replace(/\/\/[^@/\s]+@/g, "//***@") // strip any embedded credentials
       .slice(0, 200);
+    // targeted hint: the Supabase SDK URL was set instead of the DB string
+    let hint: string | null = null;
+    if (!url && process.env.NEXT_PUBLIC_SUPABASE_URL) {
+      hint =
+        "NEXT_PUBLIC_SUPABASE_URL is set, but the app needs DATABASE_URL — the Postgres " +
+        "connection string from Supabase → Project Settings → Database → Connection string " +
+        "(Transaction pooler, port 6543).";
+    } else if (/timeout|ETIMEDOUT/i.test(message)) {
+      hint = "Database unreachable — if this is Supabase, use the Transaction pooler string (port 6543), not the direct connection (port 5432, IPv6-only).";
+    } else if (/password authentication failed/i.test(message)) {
+      hint = "Wrong password, or special characters in it need URL-encoding (@ → %40, # → %23).";
+    }
     return Response.json({
       ok: false,
       app: "MerrageHall",
       db: { connected: false, target, code: err.code ?? null, message },
+      hint,
       ms: Date.now() - startedAt,
     });
   }

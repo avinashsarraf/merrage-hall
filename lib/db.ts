@@ -10,6 +10,31 @@ import * as schema from "./schema.ts";
 const connectionString =
   process.env.DATABASE_URL ?? "postgresql://postgres:postgres@127.0.0.1:54329/merrage";
 
+/**
+ * Supabase (and most managed Postgres) require TLS, while the local embedded
+ * server doesn't support it. Enable SSL automatically for any non-local host,
+ * unless the connection string already specifies sslmode (postgres-js reads
+ * that itself — don't override it).
+ */
+function sslForHost(url: string): boolean | undefined {
+  try {
+    const u = new URL(url);
+    if (u.searchParams.has("sslmode") || u.searchParams.has("ssl")) return undefined;
+    const h = u.hostname;
+    const isLocal =
+      h === "localhost" ||
+      h === "127.0.0.1" ||
+      h === "::1" ||
+      h === "host.docker.internal" ||
+      /^10\./.test(h) ||
+      /^192\.168\./.test(h) ||
+      /^172\.(1[6-9]|2\d|3[01])\./.test(h);
+    return isLocal ? undefined : true;
+  } catch {
+    return undefined;
+  }
+}
+
 const g = globalThis as unknown as { __mhSql?: postgres.Sql };
 
 const client =
@@ -20,6 +45,7 @@ const client =
     max: 10,
     idle_timeout: 20,
     connect_timeout: 10,
+    ssl: sslForHost(connectionString),
   });
 
 if (!g.__mhSql) g.__mhSql = client;

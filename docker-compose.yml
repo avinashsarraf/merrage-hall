@@ -1,9 +1,12 @@
 # ─────────────────────────────────────────────────────────────────────────────
 # MerrageHall — local full-stack with Docker (app + PostgreSQL)
 #
-#   docker compose up -d --build                 # start app + database
-#   docker compose --profile setup run --rm setup   # one-time: schema + seed
+#   docker compose up -d --build                    # start app + database
 #   open http://localhost:3000
+#
+# The app container automatically creates the schema and seeds demo data
+# on first boot — no manual step needed. The optional "setup" profile is
+# only for manually re-running schema push + seed.
 #
 # Coolify deployments do NOT use this file (Coolify builds the Dockerfile
 # directly). This is for running the full stack on your own machine/server.
@@ -38,7 +41,8 @@ services:
         condition: service_healthy
     restart: unless-stopped
 
-  # One-time setup: creates tables + seeds demo data.
+  # Optional manual setup (the app container already does this automatically
+  # on first boot): creates tables + seeds demo data.
   #   docker compose --profile setup run --rm setup
   setup:
     image: node:22-alpine
