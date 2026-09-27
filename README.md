@@ -98,7 +98,7 @@ deploy. Two Coolify-specific notes:
 | Variable | Required | Default | Purpose |
 |---|---|---|---|
 | `DATABASE_URL` | **yes** | — | Postgres/Supabase connection string (pooler recommended) |
-| `NEXT_PUBLIC_ROOT_DOMAIN` | no | `merragehall.app` | Venue-subdomain root domain (build arg + runtime) |
+| `NEXT_PUBLIC_ROOT_DOMAIN` | no | `merragehall.app` | Your app's public domain — set it to whatever host the site is served from (e.g. `marriagehall.digitalcomrade.in`); otherwise the multi-tenant middleware treats that host as a *venue's* custom domain. Read at **runtime** — no rebuild needed. Venue subdomains become `slug.<this-domain>` |
 | `ALLOW_INSECURE_COOKIES` | no | `false` | `true` only for plain-HTTP deployments |
 
 Optional env vars:

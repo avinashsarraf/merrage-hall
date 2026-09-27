@@ -5,7 +5,6 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { BadgeCheck, Copy, ExternalLink, Globe, Loader2, Plus, ShieldQuestion, Trash2 } from "lucide-react";
 import { addCustomDomain, removeCustomDomain, verifyCustomDomain } from "@/lib/actions/hall";
-import { ROOT_DOMAIN } from "@/lib/constants";
 import { Card, CardHeader, CardBody } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Field, Input } from "@/components/ui/input";
@@ -19,12 +18,14 @@ export function DomainsPanel({
   domainVerified,
   planAllowsDomain,
   planName,
+  rootDomain,
 }: {
   slug: string;
   customDomain: string | null;
   domainVerified: boolean;
   planAllowsDomain: boolean;
   planName: string;
+  rootDomain: string;
 }) {
   const router = useRouter();
   const { toast } = useToast();
@@ -34,7 +35,7 @@ export function DomainsPanel({
   const [confirmRemove, setConfirmRemove] = useState(false);
   const [verifying, setVerifying] = useState(false);
 
-  const subdomain = `${slug}.${ROOT_DOMAIN}`;
+  const subdomain = `${slug}.${rootDomain}`;
 
   function copy(value: string) {
     navigator.clipboard?.writeText(value).then(
@@ -183,7 +184,7 @@ export function DomainsPanel({
                           <tr>
                             <td className="px-3 py-2">CNAME</td>
                             <td className="px-3 py-2">www</td>
-                            <td className="px-3 py-2">cname.{ROOT_DOMAIN}</td>
+                            <td className="px-3 py-2">cname.{rootDomain}</td>
                           </tr>
                           <tr>
                             <td className="px-3 py-2">A</td>

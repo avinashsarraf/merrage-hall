@@ -4,7 +4,7 @@ import { useState, useTransition } from "react";
 import { useRouter } from "next/navigation";
 import { ImagePlus, Loader2, Save, Trash2 } from "lucide-react";
 import { updateHall } from "@/lib/actions/hall";
-import { AMENITIES_OPTIONS, ROOT_DOMAIN } from "@/lib/constants";
+import { AMENITIES_OPTIONS } from "@/lib/constants";
 import { formatINR } from "@/lib/utils";
 import { Card, CardHeader, CardBody } from "@/components/ui/card";
 import { Field, Input, Textarea } from "@/components/ui/input";
@@ -36,7 +36,7 @@ export type HallSettings = {
   images: string[];
 };
 
-export function HallSettingsForm({ hall }: { hall: HallSettings }) {
+export function HallSettingsForm({ hall, rootDomain }: { hall: HallSettings; rootDomain: string }) {
   const router = useRouter();
   const { toast } = useToast();
   const [pending, startTransition] = useTransition();
@@ -107,7 +107,7 @@ export function HallSettingsForm({ hall }: { hall: HallSettings }) {
             <Field label="Venue name *">
               <Input value={form.name} onChange={(e) => set("name", e.target.value)} />
             </Field>
-            <Field label="Public URL" hint={`${form.slug}.${ROOT_DOMAIN} (managed in Domains)`}>
+            <Field label="Public URL" hint={`${form.slug}.${rootDomain} (managed in Domains)`}>
               <Input value={`/halls/${form.slug}`} disabled />
             </Field>
           </div>

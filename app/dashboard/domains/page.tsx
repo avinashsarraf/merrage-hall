@@ -1,4 +1,5 @@
 import { requireRole, getHallForUser } from "@/lib/auth";
+import { ROOT_DOMAIN } from "@/lib/constants";
 import { Card } from "@/components/ui/card";
 import { EmptyState } from "@/components/ui/feedback";
 import { Building2 } from "lucide-react";
@@ -32,6 +33,7 @@ export default async function DomainsPage() {
         domainVerified={hall.domainVerified}
         planAllowsDomain={hall.subscription?.plan.customDomain ?? false}
         planName={hall.subscription?.plan.name ?? "Starter"}
+        rootDomain={ROOT_DOMAIN}
       />
     </div>
   );

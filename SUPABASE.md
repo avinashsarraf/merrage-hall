@@ -79,7 +79,7 @@ DATABASE_URL="…" npm start     # next start
 | Variable | Required | Default | Purpose |
 |---|---|---|---|
 | `DATABASE_URL` | **yes** | — | Supabase Postgres connection string (pooler recommended) |
-| `NEXT_PUBLIC_ROOT_DOMAIN` | no | `merragehall.app` | Root domain for venue subdomains. Inlined at **build** time (pass as Docker build arg) and read at runtime by the middleware |
+| `NEXT_PUBLIC_ROOT_DOMAIN` | no | `merragehall.app` | **Set this to your app's public domain** (e.g. `marriagehall.example.com`). Read at runtime — no rebuild needed. Venue subdomains become `slug.<domain>`; any other host is treated as a venue's custom domain |
 | `ALLOW_INSECURE_COOKIES` | no | `false` | Set `true` only when serving over plain HTTP without TLS |
 
 ## 6 · Demo accounts (created by the seed)
