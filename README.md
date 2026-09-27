@@ -95,6 +95,14 @@ deploy. Two Coolify-specific notes:
   `ALLOW_INSECURE_COOKIES=true` — otherwise the browser drops the login cookie
   (it is marked `Secure` in production by default).
 
+**Full stack locally with Docker** (app + PostgreSQL, no Supabase needed):
+
+```bash
+docker compose up -d --build                     # build image, start app + db
+docker compose --profile setup run --rm setup    # one-time: schema + demo seed
+open http://localhost:3000
+```
+
 | Variable | Required | Default | Purpose |
 |---|---|---|---|
 | `DATABASE_URL` | **yes** | — | Postgres/Supabase connection string (pooler recommended) |
