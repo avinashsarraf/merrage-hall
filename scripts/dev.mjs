@@ -2,12 +2,12 @@
  * Dev orchestrator — powers the live preview.
  *
  * Boots a local embedded PostgreSQL (a stand-in with the same wire protocol &
- * SQL dialect as Supabase Postgres), syncs the Prisma schema, seeds demo data
+ * SQL dialect as Supabase Postgres), syncs the Drizzle schema, seeds demo data
  * when the database is empty, then starts the Next.js dev server.
  *
  * For production / real usage: set DATABASE_URL to your Supabase connection
  * string (Project Settings → Database → Connection string) and run
- * `npx prisma db push && npm run db:seed` — no local Postgres involved.
+ * `npm run db:push && npm run db:seed` — no local Postgres involved.
  */
 import { existsSync, mkdirSync, rmSync, writeFileSync } from "node:fs";
 import { execSync, spawn } from "node:child_process";
