@@ -1,0 +1,29 @@
+# Supabase project configuration (for `supabase link` + CLI workflows).
+# The actual schema lives in lib/schema.ts (Drizzle) — apply it with:
+#   DATABASE_URL="<your-supabase-connection-string>" npm run db:push
+project_id = "merrage-hall"
+
+[api]
+enabled = true
+port = 54321
+schemas = ["public", "storage", "graphql_public"]
+
+[db]
+port = 54322
+shadow_port = 54320
+major_version = 15
+
+[studio]
+enabled = true
+port = 54323
+
+# Auth / storage / realtime are not used by this app yet — the data layer
+# talks to Postgres directly via Drizzle (works identically on Supabase).
+[auth]
+enabled = false
+
+[storage]
+enabled = false
+
+[realtime]
+enabled = false

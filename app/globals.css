@@ -1,0 +1,87 @@
+@import "tailwindcss";
+
+@theme {
+  /* Brand — royal blue (light theme) */
+  --color-brand-50: #eff6ff;
+  --color-brand-100: #dbeafe;
+  --color-brand-200: #bfdbfe;
+  --color-brand-300: #93c5fd;
+  --color-brand-400: #60a5fa;
+  --color-brand-500: #3b82f6;
+  --color-brand-600: #2563eb;
+  --color-brand-700: #1d4ed8;
+  --color-brand-800: #1e40af;
+  --color-brand-900: #1e3a8a;
+  --color-brand-950: #172554;
+
+  /* Accent — champagne gold */
+  --color-gold-50: #faf7ea;
+  --color-gold-100: #f4ecc8;
+  --color-gold-200: #ead894;
+  --color-gold-300: #dfc25c;
+  --color-gold-400: #d4af37;
+  --color-gold-500: #c29a27;
+  --color-gold-600: #a67c1e;
+  --color-gold-700: #855d1a;
+  --color-gold-800: #6e4c1b;
+  --color-gold-900: #5c401c;
+  --color-gold-950: #322208;
+
+  /* Soft-white surfaces (cool tint) */
+  --color-cream-50: #fbfcfe;
+  --color-cream-100: #f7f9fc;
+  --color-cream-200: #eef2f8;
+  --color-cream-300: #e2e8f2;
+
+  --font-sans: "Inter Variable", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-display: "Playfair Display Variable", "Iowan Old Style", Georgia, serif;
+
+  --shadow-soft: 0 1px 2px rgb(23 37 84 / 0.05), 0 8px 24px -8px rgb(23 37 84 / 0.12);
+  --shadow-lift: 0 2px 4px rgb(23 37 84 / 0.06), 0 16px 40px -12px rgb(23 37 84 / 0.20);
+
+  --animate-fade-up: fade-up 0.5s cubic-bezier(0.16, 1, 0.3, 1) both;
+  --animate-fade-in: fade-in 0.35s ease-out both;
+
+  @keyframes fade-up {
+    from { opacity: 0; transform: translateY(14px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes fade-in {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: var(--color-cream-100);
+  color: var(--color-stone-800);
+  -webkit-font-smoothing: antialiased;
+}
+
+::selection {
+  background: var(--color-brand-200);
+  color: var(--color-brand-950);
+}
+
+/* slim, tinted scrollbars */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--color-brand-200) transparent;
+}
+*::-webkit-scrollbar { width: 8px; height: 8px; }
+*::-webkit-scrollbar-thumb { background: var(--color-brand-200); border-radius: 8px; }
+*::-webkit-scrollbar-track { background: transparent; }
+
+input[type="date"]::-webkit-calendar-picker-indicator {
+  cursor: pointer;
+}
+
+@media print {
+  .no-print { display: none !important; }
+  body { background: white; }
+  .print-flat { box-shadow: none !important; border: none !important; }
+}

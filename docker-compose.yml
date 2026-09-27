@@ -1,0 +1,57 @@
+# ─────────────────────────────────────────────────────────────────────────────
+# MerrageHall — local full-stack with Docker (app + PostgreSQL)
+#
+#   docker compose up -d --build                 # start app + database
+#   docker compose --profile setup run --rm setup   # one-time: schema + seed
+#   open http://localhost:3000
+#
+# Coolify deployments do NOT use this file (Coolify builds the Dockerfile
+# directly). This is for running the full stack on your own machine/server.
+# ─────────────────────────────────────────────────────────────────────────────
+
+services:
+  db:
+    image: postgres:18-alpine
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: merrage
+    volumes:
+      - merrage-db:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d merrage"]
+      interval: 5s
+      timeout: 3s
+      retries: 20
+    restart: unless-stopped
+
+  app:
+    build: .
+    ports:
+      - "3000:3000"
+    environment:
+      DATABASE_URL: postgresql://postgres:postgres@db:5432/merrage
+      # set to your public domain when serving from something other than localhost
+      NEXT_PUBLIC_ROOT_DOMAIN: ${NEXT_PUBLIC_ROOT_DOMAIN:-merragehall.app}
+    depends_on:
+      db:
+        condition: service_healthy
+    restart: unless-stopped
+
+  # One-time setup: creates tables + seeds demo data.
+  #   docker compose --profile setup run --rm setup
+  setup:
+    image: node:22-alpine
+    profiles: ["setup"]
+    working_dir: /repo
+    volumes:
+      - ./:/repo
+    environment:
+      DATABASE_URL: postgresql://postgres:postgres@db:5432/merrage
+    depends_on:
+      db:
+        condition: service_healthy
+    command: sh -c "npm ci && npx drizzle-kit push --force && node --experimental-strip-types scripts/seed.ts"
+
+volumes:
+  merrage-db:
