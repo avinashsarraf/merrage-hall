@@ -11,6 +11,10 @@ npm run dev
 
 Vite serves the web app on port `5173`; the Express API runs on `3001` and is proxied under `/api` by Vite. Both services bind to `0.0.0.0` for preview environments. Build the client with `npm run build`.
 
+## Deploy with Coolify / Docker
+
+The included multi-stage `Dockerfile` builds the Vite client and runs the Express API + SPA on a single port. In Coolify, deploy this repository with the **Dockerfile** build pack, set the exposed/container port to **3000**, and attach a persistent volume at **`/app/data`** so the JSON workspace survives container replacements. `PORT` defaults to `3000`; the container health check uses `/api/health`. No separate API service or Vite development server is needed in production.
+
 ## Try the app
 
 - Landing page: `http://localhost:5173/`

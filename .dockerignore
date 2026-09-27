@@ -1,0 +1,14 @@
+.git
+.gitignore
+node_modules
+dist
+coverage
+.npm
+.cache
+.env
+.env.*
+!.env.example
+data/*.json
+data/*.tmp
+*.log
+README.md

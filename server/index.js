@@ -4,7 +4,7 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const app = express();
-const port = Number(process.env.API_PORT || 3001);
+const port = Number(process.env.PORT || process.env.API_PORT || 3001);
 const root = path.dirname(fileURLToPath(import.meta.url));
 const storeFile = path.join(root, '..', 'data', 'store.json');
 app.use(express.json({ limit: '1mb' }));
@@ -79,6 +79,11 @@ app.post('/api/auth/login', (req, res) => {
     user: { email, name: email.split('@')[0].replace(/[._-]/g, ' ').replace(/\b\w/g, c => c.toUpperCase()), role }
   });
 });
+// In production the same Node process serves the compiled SPA and its API, so Coolify
+// only needs to expose one HTTP port. Vite proxies /api to this server during development.
+app.use('/api', (_req, res) => res.status(404).json({ error: 'API route not found.' }));
+app.use(express.static(path.join(root, '..', 'dist'), { index: 'index.html', maxAge: '1h' }));
+app.get(/.*/, (_req, res) => res.sendFile(path.join(root, '..', 'dist', 'index.html')));
 app.use((error, _req, res, _next) => {
   console.error(error);
   res.status(500).json({ error: 'Something went wrong. Please try again.' });
