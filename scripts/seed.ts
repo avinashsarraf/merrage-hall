@@ -580,6 +580,8 @@ async function main() {
       name: spec.name,
       slug: spec.slug,
       status: spec.status,
+      customDomain: spec.customDomain ?? null,
+      domainVerified: spec.customDomain ? true : false,
       description: spec.description,
       address: spec.address,
       city: spec.city,
