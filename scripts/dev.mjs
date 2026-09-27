@@ -89,10 +89,19 @@ async function main() {
   run("node --experimental-strip-types scripts/seed.ts", process.env); // seeds only when empty
 
   console.log("> Starting Next.js dev server on http://0.0.0.0:3000 …");
-  const next = spawn("npx", ["next", "dev", "-H", "0.0.0.0", "-p", "3000"], {
-    stdio: "inherit",
-    env: process.env,
-  });
+  // spawn next dev — on Windows, `npx` is a .cmd and can't be spawned directly,
+  // so invoke node with the concrete bin path instead.
+  const nextBin = "./node_modules/next/dist/bin/next";
+  const next =
+    process.platform === "win32"
+      ? spawn(process.execPath, [nextBin, "dev", "-H", "0.0.0.0", "-p", "3000"], {
+          stdio: "inherit",
+          env: process.env,
+        })
+      : spawn("npx", ["next", "dev", "-H", "0.0.0.0", "-p", "3000"], {
+          stdio: "inherit",
+          env: process.env,
+        });
   next.on("exit", (code) => process.exit(code ?? 0));
 }
 
