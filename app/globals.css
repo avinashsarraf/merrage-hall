@@ -1,0 +1,87 @@
+@import "tailwindcss";
+
+@theme {
+  /* Brand — deep maroon / burgundy (wedding palette) */
+  --color-brand-50: #fdf3f6;
+  --color-brand-100: #fbe7ee;
+  --color-brand-200: #f7cfdd;
+  --color-brand-300: #f0a7bd;
+  --color-brand-400: #e5759a;
+  --color-brand-500: #d44d7b;
+  --color-brand-600: #bc3160;
+  --color-brand-700: #9d2350;
+  --color-brand-800: #831f45;
+  --color-brand-900: #6e1d3c;
+  --color-brand-950: #41091f;
+
+  /* Accent — antique gold */
+  --color-gold-50: #fbf9ec;
+  --color-gold-100: #f6f0ca;
+  --color-gold-200: #eddd92;
+  --color-gold-300: #e4c75b;
+  --color-gold-400: #ddb236;
+  --color-gold-500: #d4a021;
+  --color-gold-600: #b57c18;
+  --color-gold-700: #905a16;
+  --color-gold-800: #754716;
+  --color-gold-900: #623b16;
+  --color-gold-950: #391f09;
+
+  /* Warm ivory surfaces */
+  --color-cream-50: #fdfbf7;
+  --color-cream-100: #faf7f1;
+  --color-cream-200: #f4eee3;
+  --color-cream-300: #eae0cd;
+
+  --font-sans: "Inter Variable", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-display: "Playfair Display Variable", "Iowan Old Style", Georgia, serif;
+
+  --shadow-soft: 0 1px 2px rgb(65 9 31 / 0.04), 0 8px 24px -8px rgb(65 9 31 / 0.10);
+  --shadow-lift: 0 2px 4px rgb(65 9 31 / 0.05), 0 16px 40px -12px rgb(65 9 31 / 0.18);
+
+  --animate-fade-up: fade-up 0.5s cubic-bezier(0.16, 1, 0.3, 1) both;
+  --animate-fade-in: fade-in 0.35s ease-out both;
+
+  @keyframes fade-up {
+    from { opacity: 0; transform: translateY(14px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes fade-in {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: var(--color-cream-100);
+  color: var(--color-stone-800);
+  -webkit-font-smoothing: antialiased;
+}
+
+::selection {
+  background: var(--color-brand-200);
+  color: var(--color-brand-950);
+}
+
+/* slim, tinted scrollbars */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--color-brand-200) transparent;
+}
+*::-webkit-scrollbar { width: 8px; height: 8px; }
+*::-webkit-scrollbar-thumb { background: var(--color-brand-200); border-radius: 8px; }
+*::-webkit-scrollbar-track { background: transparent; }
+
+input[type="date"]::-webkit-calendar-picker-indicator {
+  cursor: pointer;
+}
+
+@media print {
+  .no-print { display: none !important; }
+  body { background: white; }
+  .print-flat { box-shadow: none !important; border: none !important; }
+}
